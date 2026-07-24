@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RentKe | Find a House</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/navbar.css" />
+    <link rel="stylesheet" href="../css/forms.css" />
+    <link rel="stylesheet" href="../css/properties.css" />
+    <link rel="stylesheet" href="../css/property-card.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar container">
+        <a class="logo" href="../index.html">RentKe</a>
+        <button class="menu-toggle" aria-label="Open menu">☰</button>
+        <div class="nav-links">
+          <a href="../index.html">Home</a>
+          <a href="./properties.html">Find a House</a>
+          <a href="./login.html">Login</a>
+          <a href="./register.html" class="btn btn-primary btn-small">Sign Up</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="section">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Discover homes</span>
+            <h2>Find a rental that feels made for you</h2>
+            <p>
+              Explore beautifully presented homes across Kenya, compare
+              prices, and narrow your options by neighborhood, budget, and
+              the kind of home you want to live in.
+            </p>
+          </div>
+          <div class="results-summary">
+            <span id="resultsCount">0 properties found</span>
+          </div>
+        </div>
+
+        <section class="search-panel properties-filters">
+          <form id="propertySearchForm" class="search-form filter-grid">
+            <div class="search-field">
+              <label for="searchInput">Search</label>
+              <input id="searchInput" type="text" placeholder="Nairobi, Kisumu..." />
+            </div>
+            <div class="search-field">
+              <label for="countyInput">County</label>
+              <input id="countyInput" type="text" placeholder="Nairobi" />
+            </div>
+            <div class="search-field">
+              <label for="townInput">Town</label>
+              <input id="townInput" type="text" placeholder="Westlands" />
+            </div>
+            <div class="search-field">
+              <label for="neighborhoodInput">Neighborhood</label>
+              <input id="neighborhoodInput" type="text" placeholder="Kileleshwa" />
+            </div>
+            <div class="search-field">
+              <label for="typeInput">Property type</label>
+              <select id="typeInput">
+                <option value="">Any</option>
+                <option value="Apartment">Apartment</option>
+                <option value="House">House</option>
+                <option value="Studio">Studio</option>
+              </select>
+            </div>
+            <div class="search-field">
+              <label for="minPriceInput">Minimum price</label>
+              <input id="minPriceInput" type="number" placeholder="10000" />
+            </div>
+            <div class="search-field">
+              <label for="maxPriceInput">Maximum price</label>
+              <input id="maxPriceInput" type="number" placeholder="50000" />
+            </div>
+            <div class="search-field">
+              <label for="bedroomsInput">Bedrooms</label>
+              <input id="bedroomsInput" type="number" placeholder="2" />
+            </div>
+            <div class="search-field">
+              <label for="bathroomsInput">Bathrooms</label>
+              <input id="bathroomsInput" type="number" placeholder="1" />
+            </div>
+            <div class="search-field">
+              <label for="sortInput">Sort</label>
+              <select id="sortInput">
+                <option value="featured">Featured</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" type="submit">Search</button>
+          </form>
+        </section>
+
+        <div class="results-toolbar">
+          <div id="statusMessage" class="status-message">Loading properties...</div>
+        </div>
+
+        <section>
+          <div id="propertyGrid" class="property-grid"></div>
+        </section>
+      </div>
+    </main>
+
+    <script src="../js/properties.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>

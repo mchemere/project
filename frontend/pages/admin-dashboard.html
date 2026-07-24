@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RentKe | Admin Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/navbar.css" />
+    <link rel="stylesheet" href="../css/forms.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/admin.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+  </head>
+  <body>
+    <div class="dashboard-shell">
+      <aside class="sidebar">
+        <h2 class="logo">RentKe</h2>
+        <nav class="sidebar-nav">
+          <a class="sidebar-link active" href="#">Dashboard</a>
+          <a class="sidebar-link" href="#">Users</a>
+          <a class="sidebar-link" href="#">Properties</a>
+          <a class="sidebar-link" href="#">Pending Approvals</a>
+          <a class="sidebar-link" href="#">Reports</a>
+          <a class="sidebar-link" href="#">Settings</a>
+          <a class="sidebar-link" href="../index.html">Logout</a>
+        </nav>
+      </aside>
+
+      <main class="dashboard-content">
+        <div class="topbar">
+          <div>
+            <span class="eyebrow">Admin dashboard</span>
+            <h1>Platform overview</h1>
+          </div>
+        </div>
+
+        <section class="stats-grid">
+          <div class="stat-card"><h3 class="card-title">420</h3><p>Total Users</p></div>
+          <div class="stat-card"><h3 class="card-title">180</h3><p>Total Properties</p></div>
+          <div class="stat-card"><h3 class="card-title">132</h3><p>Active Listings</p></div>
+          <div class="stat-card"><h3 class="card-title">14</h3><p>Pending Approvals</p></div>
+        </section>
+
+        <section class="panel-card">
+          <h2 class="card-title">User management</h2>
+          <div class="table-list">
+            <div class="table-row">
+              <strong>Jane Njeri</strong>
+              <span>jane@example.com</span>
+              <span>Tenant</span>
+              <span>12 Jul 2026</span>
+              <button class="btn btn-secondary">Suspend</button>
+            </div>
+            <div class="table-row">
+              <strong>Peter Kimani</strong>
+              <span>peter@example.com</span>
+              <span>Landlord</span>
+              <span>08 Jul 2026</span>
+              <button class="btn btn-secondary">View</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-card">
+          <h2 class="card-title">Reports</h2>
+          <div class="table-list">
+            <div class="table-row">
+              <strong>Luxury 3 Bedroom Home</strong>
+              <span>Misleading listing</span>
+              <span>Reporter: Esther</span>
+              <span>13 Jul 2026</span>
+              <button class="btn btn-secondary">Review</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="../js/main.js"></script>
+  </body>
+</html>

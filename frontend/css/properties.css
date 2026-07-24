@@ -1,0 +1,36 @@
+.properties-filters {
+  margin-bottom: 1.5rem;
+  padding: 1.2rem;
+  background: linear-gradient(135deg, #fff8fb, #fffdfd);
+}
+
+.filter-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: 0;
+}
+
+.results-toolbar {
+  margin-bottom: 1rem;
+}
+
+.results-summary {
+  background: var(--accent);
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+.status-message {
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+  background: white;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}

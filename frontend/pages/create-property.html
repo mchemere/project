@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RentKe | Create Property</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/navbar.css" />
+    <link rel="stylesheet" href="../css/forms.css" />
+    <link rel="stylesheet" href="../css/create-property.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar container">
+        <a class="logo" href="../index.html">RentKe</a>
+        <button class="menu-toggle" aria-label="Open menu">☰</button>
+        <div class="nav-links">
+          <a href="../index.html">Home</a>
+          <a href="./properties.html">Find a House</a>
+          <a href="./landlord-dashboard.html">Dashboard</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="section">
+      <div class="container create-property-layout">
+        <section class="search-panel" style="padding: 1.2rem;">
+          <span class="eyebrow">List a property</span>
+          <h1>Create a rental listing</h1>
+          <form id="createPropertyForm" class="search-form" style="grid-template-columns: 1fr 1fr;">
+            <div class="search-field" style="grid-column: 1 / -1;">
+              <label for="propertyTitle">Property title</label>
+              <input id="propertyTitle" type="text" required />
+            </div>
+            <div class="search-field" style="grid-column: 1 / -1;">
+              <label for="propertyDescription">Description</label>
+              <textarea id="propertyDescription" rows="4" required></textarea>
+            </div>
+            <div class="search-field">
+              <label for="propertyType">Property type</label>
+              <select id="propertyType">
+                <option>Apartment</option>
+                <option>House</option>
+                <option>Studio</option>
+              </select>
+            </div>
+            <div class="search-field">
+              <label for="propertyCounty">County</label>
+              <input id="propertyCounty" type="text" placeholder="Nairobi" required />
+            </div>
+            <div class="search-field">
+              <label for="propertyTown">Town</label>
+              <input id="propertyTown" type="text" placeholder="Westlands" required />
+            </div>
+            <div class="search-field">
+              <label for="propertyNeighborhood">Neighborhood</label>
+              <input id="propertyNeighborhood" type="text" placeholder="Kileleshwa" required />
+            </div>
+            <div class="search-field">
+              <label for="propertyAddress">Address</label>
+              <input id="propertyAddress" type="text" placeholder="123 Example Road" required />
+            </div>
+            <div class="search-field">
+              <label for="propertyRent">Monthly rent</label>
+              <input id="propertyRent" type="number" placeholder="25000" required />
+            </div>
+            <div class="search-field">
+              <label for="propertyBedrooms">Bedrooms</label>
+              <input id="propertyBedrooms" type="number" placeholder="2" required />
+            </div>
+            <div class="search-field">
+              <label for="propertyBathrooms">Bathrooms</label>
+              <input id="propertyBathrooms" type="number" placeholder="1" required />
+            </div>
+            <div class="search-field">
+              <label for="propertySize">Property size</label>
+              <input id="propertySize" type="text" placeholder="1200 sq ft" required />
+            </div>
+            <div class="search-field" style="grid-column: 1 / -1;">
+              <label for="propertyImages">Property images</label>
+              <input id="propertyImages" type="file" multiple accept="image/*" />
+              <div id="imagePreview" class="preview-grid"></div>
+            </div>
+            <div class="search-field" style="grid-column: 1 / -1;">
+              <label for="propertyAvailability">Availability</label>
+              <select id="propertyAvailability">
+                <option>Available</option>
+                <option>Rented</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" type="submit" style="grid-column: 1 / -1;">Publish Listing</button>
+            <p id="propertyFormMessage" class="form-message"></p>
+          </form>
+        </section>
+
+        <aside class="search-panel" style="padding: 1.2rem;">
+          <h2>Listing checklist</h2>
+          <ul>
+            <li>Clear title and description</li>
+            <li>Reasonable rent and location</li>
+            <li>Useful amenities</li>
+            <li>At least one photo</li>
+          </ul>
+        </aside>
+      </div>
+    </main>
+
+    <script src="../js/create-property.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RentKe | Landlord Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/navbar.css" />
+    <link rel="stylesheet" href="../css/forms.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/landlord.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+  </head>
+  <body>
+    <div class="dashboard-shell">
+      <aside class="sidebar">
+        <h2 class="logo">RentKe</h2>
+        <nav class="sidebar-nav">
+          <a class="sidebar-link active" href="#">Dashboard</a>
+          <a class="sidebar-link" href="#">My Properties</a>
+          <a class="sidebar-link" href="./create-property.html">Add Property</a>
+          <a class="sidebar-link" href="#">Inquiries</a>
+          <a class="sidebar-link" href="#">Analytics</a>
+          <a class="sidebar-link" href="#">Profile</a>
+          <a class="sidebar-link" href="#">Settings</a>
+          <a class="sidebar-link" href="../index.html">Logout</a>
+        </nav>
+      </aside>
+
+      <main class="dashboard-content">
+        <div class="topbar">
+          <div>
+            <span class="eyebrow">Landlord dashboard</span>
+            <h1>Manage your rental portfolio</h1>
+          </div>
+        </div>
+
+        <section class="stats-grid">
+          <div class="stat-card"><h3 class="card-title">18</h3><p>Total Properties</p></div>
+          <div class="stat-card"><h3 class="card-title">12</h3><p>Active Listings</p></div>
+          <div class="stat-card"><h3 class="card-title">6</h3><p>Rented Properties</p></div>
+          <div class="stat-card"><h3 class="card-title">4</h3><p>New Inquiries</p></div>
+        </section>
+
+        <section class="panel-card">
+          <h2 class="card-title">My properties</h2>
+          <div id="landlordPropertyList" class="property-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="../js/landlord-dashboard.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>

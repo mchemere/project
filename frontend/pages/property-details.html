@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RentKe | Property Details</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/navbar.css" />
+    <link rel="stylesheet" href="../css/forms.css" />
+    <link rel="stylesheet" href="../css/property-details.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar container">
+        <a class="logo" href="../index.html">RentKe</a>
+        <button class="menu-toggle" aria-label="Open menu">☰</button>
+        <div class="nav-links">
+          <a href="../index.html">Home</a>
+          <a href="./properties.html">Find a House</a>
+          <a href="./login.html">Login</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="section">
+      <div class="container details-layout">
+        <section class="gallery-card">
+          <div class="gallery-main">
+            <img id="mainImage" src="" alt="Property main" />
+            <button id="prevImage" class="gallery-control">←</button>
+            <button id="nextImage" class="gallery-control right">→</button>
+          </div>
+          <div id="galleryThumbnails" class="gallery-thumbnails"></div>
+        </section>
+
+        <section class="details-card">
+          <span class="eyebrow">Featured listing</span>
+          <h1 id="detailTitle">Property title</h1>
+          <div class="detail-price" id="detailPrice">KES 0/month</div>
+          <p id="detailLocation">Location</p>
+          <div class="detail-specs" id="detailSpecs">Bedrooms | Bathrooms</div>
+          <div class="detail-status" id="detailStatus">Available</div>
+          <p id="detailDescription">Description</p>
+          <p class="detail-note">
+            Find a home that fits your routine, your budget, and the kind of
+            comfort you want to come back to every evening.
+          </p>
+
+          <div class="detail-actions">
+            <button class="btn btn-primary" id="contactBtn">Contact Landlord</button>
+            <button class="btn btn-secondary" id="saveFavoriteBtn">Save to Favorites</button>
+            <button class="btn btn-danger" id="reportBtn">Report Property</button>
+          </div>
+        </section>
+
+        <section class="amenities-card">
+          <h2>Amenities</h2>
+          <div id="amenitiesList" class="amenities-list"></div>
+        </section>
+
+        <section class="landlord-card">
+          <h2>Landlord Information</h2>
+          <div class="landlord-profile">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" alt="Landlord profile" />
+            <div>
+              <strong>Mary Wanjiku</strong>
+              <p>Verified Landlord • Nairobi</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="similar-card">
+          <div class="section-heading">
+            <h2>Similar properties</h2>
+          </div>
+          <div id="similarProperties" class="property-grid"></div>
+        </section>
+      </div>
+    </main>
+
+    <script src="../js/properties.js"></script>
+    <script src="../js/property-details.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>

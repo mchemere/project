@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RentKe | Register</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/navbar.css" />
+    <link rel="stylesheet" href="../css/forms.css" />
+    <link rel="stylesheet" href="../css/auth.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar container">
+        <a class="logo" href="../index.html">RentKe</a>
+        <button class="menu-toggle" aria-label="Open menu">☰</button>
+        <div class="nav-links">
+          <a href="../index.html">Home</a>
+          <a href="./properties.html">Find a House</a>
+          <a href="./login.html">Login</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="section auth-layout">
+      <div class="auth-panel">
+        <span class="eyebrow">Create account</span>
+        <h1>Create your RentKe account</h1>
+        <p>Join as a tenant or landlord and start finding a home you can feel proud of.</p>
+        <form id="registerForm">
+          <div class="auth-grid">
+            <div class="search-field">
+              <label for="registerName">Full name</label>
+              <input id="registerName" type="text" placeholder="Jane Doe" required />
+            </div>
+            <div class="search-field">
+              <label for="registerPhone">Phone number</label>
+              <input id="registerPhone" type="tel" placeholder="0712345678" required />
+            </div>
+            <div class="search-field">
+              <label for="registerEmail">Email</label>
+              <input id="registerEmail" type="email" placeholder="you@example.com" required />
+            </div>
+            <div class="search-field">
+              <label for="registerRole">Account type</label>
+              <select id="registerRole">
+                <option value="tenant">Tenant</option>
+                <option value="landlord">Landlord</option>
+              </select>
+            </div>
+            <div class="search-field">
+              <label for="registerPassword">Password</label>
+              <input id="registerPassword" type="password" placeholder="********" required />
+            </div>
+            <div class="search-field">
+              <label for="registerConfirmPassword">Confirm password</label>
+              <input id="registerConfirmPassword" type="password" placeholder="********" required />
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit" style="margin-top: 1rem;">Register</button>
+        </form>
+        <p id="authMessage" class="form-message"></p>
+      </div>
+    </main>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>

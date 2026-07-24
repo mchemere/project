@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RentKe | Tenant Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/navbar.css" />
+    <link rel="stylesheet" href="../css/forms.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+  </head>
+  <body>
+    <div class="dashboard-shell">
+      <aside class="sidebar">
+        <h2 class="logo">RentKe</h2>
+        <nav class="sidebar-nav">
+          <a class="sidebar-link active" href="#">Dashboard</a>
+          <a class="sidebar-link" href="./properties.html">Find a House</a>
+          <a class="sidebar-link" href="#">Favorites</a>
+          <a class="sidebar-link" href="#">My Inquiries</a>
+          <a class="sidebar-link" href="#">Recently Viewed</a>
+          <a class="sidebar-link" href="#">Profile</a>
+          <a class="sidebar-link" href="#">Settings</a>
+          <a class="sidebar-link" href="../index.html">Logout</a>
+        </nav>
+      </aside>
+
+      <main class="dashboard-content">
+        <div class="topbar">
+          <div>
+            <span class="eyebrow">Tenant dashboard</span>
+            <h1>Welcome back, Jane</h1>
+            <p>Manage saved homes, keep track of inquiries, and discover your next ideal rental with confidence.</p>
+          </div>
+          <div class="search-field">
+            <input type="text" placeholder="Search listings" />
+          </div>
+        </div>
+
+        <section class="stats-grid" id="tenantStats"></section>
+
+        <section class="panel-card">
+          <h2 class="card-title">Recommended properties</h2>
+          <div id="recommendedProperties" class="property-grid"></div>
+        </section>
+
+        <section class="panel-card">
+          <h2 class="card-title">Recent activity</h2>
+          <div class="activity-list">
+            <div class="activity-item"><span>Saved property: Riverside Apartment</span><span>Today</span></div>
+            <div class="activity-item"><span>Contacted landlord: Westlands House</span><span>Yesterday</span></div>
+            <div class="activity-item"><span>Viewed property: Nakuru 2 Bedroom</span><span>2 days ago</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="../js/properties.js"></script>
+    <script src="../js/tenant-dashboard.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>
