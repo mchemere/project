@@ -10,8 +10,6 @@ const properties = [
     county: 'Kisumu',
     town: 'Kisumu Town',
     neighborhood: 'Mamboleo',
-    image:
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=900&q=80',
   },
   {
     id: 2,
@@ -24,8 +22,6 @@ const properties = [
     county: 'Nairobi',
     town: 'Westlands',
     neighborhood: 'Kileleshwa',
-    image:
-      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=80',
   },
   {
     id: 3,
@@ -38,8 +34,6 @@ const properties = [
     county: 'Mombasa',
     town: 'Mombasa',
     neighborhood: 'Nyali',
-    image:
-      'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80',
   },
   {
     id: 4,
@@ -52,8 +46,6 @@ const properties = [
     county: 'Nakuru',
     town: 'Nakuru Town',
     neighborhood: 'Milimani',
-    image:
-      'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80',
   },
   {
     id: 5,
@@ -66,8 +58,6 @@ const properties = [
     county: 'Uasin Gishu',
     town: 'Eldoret',
     neighborhood: 'Kapsoya',
-    image:
-      'https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=900&q=80',
   },
   {
     id: 6,
@@ -80,8 +70,6 @@ const properties = [
     county: 'Nairobi',
     town: 'Nairobi',
     neighborhood: 'CBD',
-    image:
-      'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=900&q=80',
   },
 ];
 
@@ -109,7 +97,6 @@ function createPropertyCard(property) {
   const isFavorite = localStorage.getItem(getFavoriteKey(property.id)) === 'true';
 
   article.innerHTML = `
-    <img src="${property.image}" alt="${property.title}" />
     <div class="property-body">
       <div class="property-meta">
         <span class="property-type">${property.type}</span>
