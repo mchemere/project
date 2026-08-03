@@ -19,5 +19,8 @@
     "real-estate"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@ljharb/tsconfig": "^0.3.2"
+  }
 }
