@@ -1,0 +1,23 @@
+{
+  "name": "rentke-backend",
+  "version": "1.0.0",
+  "description": "Backend API for RentKe property rental platform",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  },
+  "keywords": [
+    "rentke",
+    "express",
+    "api",
+    "real-estate"
+  ],
+  "author": "",
+  "license": "MIT"
+}
