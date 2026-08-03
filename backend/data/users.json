@@ -6,5 +6,21 @@
     "phone": "+254700000000",
     "role": "tenant",
     "password": "password123"
+  },
+  {
+    "id": 2,
+    "name": "Test User",
+    "email": "frontendtest@example.com",
+    "phone": "0712345678",
+    "role": "tenant",
+    "password": "password123"
+  },
+  {
+    "id": 3,
+    "name": "gfredsdf",
+    "email": "fredfg@gmai.com",
+    "phone": "011232455",
+    "role": "tenant",
+    "password": "wabuge2006"
   }
 ]

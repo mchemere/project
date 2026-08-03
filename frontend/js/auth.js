@@ -21,6 +21,14 @@ function validateEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+function getApiUrl(path) {
+  if (window.location.protocol === 'file:') {
+    return `http://localhost:3000${path}`;
+  }
+
+  return path;
+}
+
 async function loginUser(event) {
   event.preventDefault();
   const form = event.currentTarget;
@@ -39,22 +47,23 @@ async function loginUser(event) {
   }
 
   try {
-    const response = await fetch('/api/login', {
+    const response = await fetch(getApiUrl('/api/login'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
     });
 
+    const data = await response.json().catch(() => ({}));
+
     if (!response.ok) {
-      throw new Error('Authentication failed');
+      throw new Error(data.message || 'Authentication failed');
     }
 
-    const data = await response.json();
     localStorage.setItem('rentkeToken', data.token || 'demo-token');
     showFormMessage(message, 'Login successful. Redirecting...', 'success-message');
     window.location.href = './tenant-dashboard.html';
   } catch (error) {
-    showFormMessage(message, 'Login request failed. Please try again.', 'error-message');
+    showFormMessage(message, error.message || 'Login request failed. Please try again.', 'error-message');
   }
 }
 
@@ -90,20 +99,22 @@ async function registerUser(event) {
   }
 
   try {
-    const response = await fetch('/api/register', {
+    const response = await fetch(getApiUrl('/api/register'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, phone, password, role }),
     });
 
+    const data = await response.json().catch(() => ({}));
+
     if (!response.ok) {
-      throw new Error('Registration failed');
+      throw new Error(data.message || 'Registration failed');
     }
 
     showFormMessage(message, 'Account created successfully. Please login.', 'success-message');
     form.reset();
   } catch (error) {
-    showFormMessage(message, 'Unable to create an account right now.', 'error-message');
+    showFormMessage(message, error.message || 'Unable to create an account right now.', 'error-message');
   }
 }
 
