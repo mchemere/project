@@ -45,14 +45,20 @@ async function loginUser(event) {
       body: JSON.stringify({ email, password }),
     });
 
+    const data = await response.json().catch(() => ({}));
+
     if (!response.ok) {
-      throw new Error('Authentication failed');
+      showFormMessage(message, data.error || 'Login failed.', 'error-message');
+      return;
     }
 
-    const data = await response.json();
     localStorage.setItem('rentkeToken', data.token || 'demo-token');
+    localStorage.setItem('rentkeUser', JSON.stringify(data.user || {}));
     showFormMessage(message, 'Login successful. Redirecting...', 'success-message');
-    window.location.href = './tenant-dashboard.html';
+    const dashboard = data.user && data.user.role === 'landlord'
+      ? './landlord-dashboard.html'
+      : './tenant-dashboard.html';
+    window.location.href = dashboard;
   } catch (error) {
     showFormMessage(message, 'Login request failed. Please try again.', 'error-message');
   }
@@ -96,11 +102,14 @@ async function registerUser(event) {
       body: JSON.stringify({ name, email, phone, password, role }),
     });
 
+    const data = await response.json().catch(() => ({}));
+
     if (!response.ok) {
-      throw new Error('Registration failed');
+      showFormMessage(message, data.error || 'Registration failed.', 'error-message');
+      return;
     }
 
-    showFormMessage(message, 'Account created successfully. Please login.', 'success-message');
+    showFormMessage(message, data.message || 'Account created successfully. Please login.', 'success-message');
     form.reset();
   } catch (error) {
     showFormMessage(message, 'Unable to create an account right now.', 'error-message');
