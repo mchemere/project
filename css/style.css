@@ -1,3 +1,10 @@
+@import url("variables.css");
+@import url("reset.css");
+@import url("animations.css");
+@import url("navbar.css");
+@import url("hero.css");
+@import url("property-card.css");
+@import url("responsive.css");
 :root {
   --bg: #fff8fb;
   --card: #ffffff;

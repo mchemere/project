@@ -1,0 +1,32 @@
+.founder-content {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.founder-image img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: var(--shadow-md);
+}
+
+.founder-text {
+    max-width: 600px;
+}
+
+.founder-text h2 {
+    font-size: 36px;
+    margin: 15px 0;
+}
+
+
+@media(max-width:768px){
+
+    .founder-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+}

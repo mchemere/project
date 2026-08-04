@@ -1,211 +1,115 @@
-const express = require('express');
-const fs = require('fs');
 const path = require('path');
+const fs = require('fs');
+const crypto = require('crypto');
+const express = require('express');
 const cors = require('cors');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const frontendPath = path.join(__dirname, '..', 'frontend');
-const usersFilePath = path.join(__dirname, 'data', 'users.json');
+const JWT_SECRET = process.env.JWT_SECRET || 'rentke-dev-secret-change-me';
 
-function ensureUsersStore() {
-  const directory = path.dirname(usersFilePath);
-  if (!fs.existsSync(directory)) {
-    fs.mkdirSync(directory, { recursive: true });
-  }
+const DATA_DIR = path.join(__dirname, 'data');
+const USERS_FILE = path.join(DATA_DIR, 'users.json');
 
-  if (!fs.existsSync(usersFilePath)) {
-    fs.writeFileSync(usersFilePath, JSON.stringify([], null, 2));
-  }
-}
-
-function readUsers() {
-  ensureUsersStore();
-
+function loadUsers() {
+  if (!fs.existsSync(USERS_FILE)) return [];
   try {
-    const raw = fs.readFileSync(usersFilePath, 'utf8');
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (error) {
+    return JSON.parse(fs.readFileSync(USERS_FILE, 'utf8'));
+  } catch {
     return [];
   }
 }
 
 function saveUsers(users) {
-  ensureUsersStore();
-  fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2));
+  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+  fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2));
+}
+
+function signToken(user) {
+  return jwt.sign(
+    { id: user.id, email: user.email, role: user.role },
+    JWT_SECRET,
+    { expiresIn: '7d' },
+  );
 }
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(frontendPath));
+app.use(express.static(path.join(__dirname, '..')));
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(frontendPath, 'index.html'));
-});
-
-const properties = [
-  {
-    id: 1,
-    title: 'Modern 2 Bedroom Apartment',
-    location: 'Kisumu, Kenya',
-    price: 25000,
-    bedrooms: 2,
-    bathrooms: 1,
-    type: 'Apartment',
-    county: 'Kisumu',
-    town: 'Kisumu Town',
-    neighborhood: 'Mamboleo',
-  },
-  {
-    id: 2,
-    title: 'Cozy Family House',
-    location: 'Nairobi, Kenya',
-    price: 42000,
-    bedrooms: 3,
-    bathrooms: 2,
-    type: 'House',
-    county: 'Nairobi',
-    town: 'Westlands',
-    neighborhood: 'Kileleshwa',
-  },
-  {
-    id: 3,
-    title: 'Beachside Studio',
-    location: 'Mombasa, Kenya',
-    price: 18000,
-    bedrooms: 1,
-    bathrooms: 1,
-    type: 'Studio',
-    county: 'Mombasa',
-    town: 'Mombasa',
-    neighborhood: 'Nyali',
-  },
-  {
-    id: 4,
-    title: 'Affordable 1 Bedroom Unit',
-    location: 'Nakuru, Kenya',
-    price: 15500,
-    bedrooms: 1,
-    bathrooms: 1,
-    type: 'Apartment',
-    county: 'Nakuru',
-    town: 'Nakuru Town',
-    neighborhood: 'Milimani',
-  },
-  {
-    id: 5,
-    title: 'Luxury 3 Bedroom Home',
-    location: 'Eldoret, Kenya',
-    price: 36000,
-    bedrooms: 3,
-    bathrooms: 2,
-    type: 'House',
-    county: 'Uasin Gishu',
-    town: 'Eldoret',
-    neighborhood: 'Kapsoya',
-  },
-  {
-    id: 6,
-    title: 'City Center Loft',
-    location: 'Nairobi, Kenya',
-    price: 30000,
-    bedrooms: 2,
-    bathrooms: 2,
-    type: 'Apartment',
-    county: 'Nairobi',
-    town: 'Nairobi',
-    neighborhood: 'CBD',
-  },
-];
-
-let users = readUsers();
-
-function createToken() {
-  return `demo-token-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-}
-
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'RentKe backend is running' });
-});
-
-app.get('/api/properties', (req, res) => {
-  res.json({ properties });
-});
-
-app.get('/api/properties/:id', (req, res) => {
-  const property = properties.find((item) => item.id === Number(req.params.id));
-
-  if (!property) {
-    return res.status(404).json({ message: 'Property not found' });
-  }
-
-  return res.json({ property });
-});
-
-app.post('/api/register', (req, res) => {
+app.post('/api/register', async (req, res) => {
   const { name, email, phone, password, role } = req.body || {};
 
   if (!name || !email || !phone || !password || !role) {
-    return res.status(400).json({ message: 'Please complete all fields.' });
+    return res.status(400).json({ error: 'All fields are required.' });
+  }
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(email)) {
+    return res.status(400).json({ error: 'Please use a valid email address.' });
   }
 
   if (password.length < 8) {
-    return res.status(400).json({ message: 'Password must be at least 8 characters long.' });
+    return res.status(400).json({ error: 'Password must be at least 8 characters long.' });
   }
 
-  users = readUsers();
-  const emailExists = users.some((user) => user.email.toLowerCase() === email.toLowerCase());
-  if (emailExists) {
-    return res.status(409).json({ message: 'An account with that email already exists.' });
+  if (!['tenant', 'landlord'].includes(role)) {
+    return res.status(400).json({ error: 'Account type must be tenant or landlord.' });
   }
 
+  const users = loadUsers();
+  const existing = users.find(
+    (u) => u.email.toLowerCase() === email.toLowerCase(),
+  );
+  if (existing) {
+    return res.status(409).json({ error: 'An account with this email already exists.' });
+  }
+
+  const passwordHash = await bcrypt.hash(password, 10);
   const user = {
-    id: users.length + 1,
+    id: crypto.randomUUID(),
     name,
-    email,
+    email: email.toLowerCase(),
     phone,
     role,
-    password,
+    passwordHash,
+    createdAt: new Date().toISOString(),
   };
 
   users.push(user);
   saveUsers(users);
 
-  return res.status(201).json({
-    message: 'Account created successfully.',
-    user: { id: user.id, name: user.name, email: user.email, role: user.role },
-  });
+  res.status(201).json({ message: 'Account created successfully. Please login.' });
 });
 
-app.post('/api/login', (req, res) => {
+app.post('/api/login', async (req, res) => {
   const { email, password } = req.body || {};
 
   if (!email || !password) {
-    return res.status(400).json({ message: 'Email and password are required.' });
+    return res.status(400).json({ error: 'Email and password are required.' });
   }
 
-  users = readUsers();
-  const user = users.find((entry) => entry.email.toLowerCase() === email.toLowerCase() && entry.password === password);
+  const users = loadUsers();
+  const user = users.find((u) => u.email.toLowerCase() === email.toLowerCase());
 
   if (!user) {
-    return res.status(401).json({ message: 'Invalid email or password.' });
+    return res.status(401).json({ error: 'Invalid email or password.' });
   }
 
-  return res.json({
-    token: createToken(),
-    user: { id: user.id, name: user.name, email: user.email, role: user.role },
+  const valid = await bcrypt.compare(password, user.passwordHash);
+  if (!valid) {
+    return res.status(401).json({ error: 'Invalid email or password.' });
+  }
+
+  res.json({
+    token: signToken(user),
+    user: { id: user.id, name: user.name, email: user.email, phone: user.phone, role: user.role },
   });
 });
 
-app.use((req, res) => {
-  res.status(404).json({ message: 'Route not found' });
+app.listen(PORT, () => {
+  console.log(`RentKe server running at http://localhost:${PORT}`);
 });
-
-if (require.main === module) {
-  app.listen(PORT, () => {
-    console.log(`RentKe API listening on http://localhost:${PORT}`);
-  });
-}
-
-module.exports = { app, users, properties };

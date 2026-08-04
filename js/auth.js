@@ -21,14 +21,6 @@ function validateEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-function getApiUrl(path) {
-  if (window.location.protocol === 'file:') {
-    return `http://localhost:3000${path}`;
-  }
-
-  return path;
-}
-
 async function loginUser(event) {
   event.preventDefault();
   const form = event.currentTarget;
@@ -47,7 +39,7 @@ async function loginUser(event) {
   }
 
   try {
-    const response = await fetch(getApiUrl('/api/login'), {
+    const response = await fetch('/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -56,14 +48,19 @@ async function loginUser(event) {
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      throw new Error(data.message || 'Authentication failed');
+      showFormMessage(message, data.error || 'Login failed.', 'error-message');
+      return;
     }
 
     localStorage.setItem('rentkeToken', data.token || 'demo-token');
+    localStorage.setItem('rentkeUser', JSON.stringify(data.user || {}));
     showFormMessage(message, 'Login successful. Redirecting...', 'success-message');
-    window.location.href = './tenant-dashboard.html';
+    const dashboard = data.user && data.user.role === 'landlord'
+      ? './landlord-dashboard.html'
+      : './tenant-dashboard.html';
+    window.location.href = dashboard;
   } catch (error) {
-    showFormMessage(message, error.message || 'Login request failed. Please try again.', 'error-message');
+    showFormMessage(message, 'Login request failed. Please try again.', 'error-message');
   }
 }
 
@@ -99,7 +96,7 @@ async function registerUser(event) {
   }
 
   try {
-    const response = await fetch(getApiUrl('/api/register'), {
+    const response = await fetch('/api/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, phone, password, role }),
@@ -108,13 +105,14 @@ async function registerUser(event) {
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      throw new Error(data.message || 'Registration failed');
+      showFormMessage(message, data.error || 'Registration failed.', 'error-message');
+      return;
     }
 
-    showFormMessage(message, 'Account created successfully. Please login.', 'success-message');
+    showFormMessage(message, data.message || 'Account created successfully. Please login.', 'success-message');
     form.reset();
   } catch (error) {
-    showFormMessage(message, error.message || 'Unable to create an account right now.', 'error-message');
+    showFormMessage(message, 'Unable to create an account right now.', 'error-message');
   }
 }
 
