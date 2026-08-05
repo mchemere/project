@@ -5,77 +5,251 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RentKe | Admin Dashboard</title>
     <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="../css/navbar.css" />
     <link rel="stylesheet" href="../css/forms.css" />
     <link rel="stylesheet" href="../css/dashboard.css" />
-    <link rel="stylesheet" href="../css/admin.css" />
+    <link rel="stylesheet" href="../css/admin-dashboard.css" />
     <link rel="stylesheet" href="../css/responsive.css" />
   </head>
   <body>
     <div class="dashboard-shell">
-      <aside class="sidebar">
+      <aside class="sidebar" id="adminSidebar">
         <h2 class="logo">RentKe</h2>
+        <span class="sidebar-heading">Admin panel</span>
         <nav class="sidebar-nav">
-          <a class="sidebar-link active" href="#">Dashboard</a>
-          <a class="sidebar-link" href="#">Users</a>
-          <a class="sidebar-link" href="#">Properties</a>
-          <a class="sidebar-link" href="#">Pending Approvals</a>
-          <a class="sidebar-link" href="#">Reports</a>
-          <a class="sidebar-link" href="#">Settings</a>
-          <a class="sidebar-link" href="../index.html">Logout</a>
+          <a class="sidebar-link active" data-section="dashboard" href="#dashboard">Dashboard</a>
+          <a class="sidebar-link" data-section="users" href="#users">Users</a>
+          <a class="sidebar-link" data-section="properties" href="#properties">Properties</a>
+          <a class="sidebar-link" data-section="approvals" href="#approvals">Pending Approvals</a>
+          <a class="sidebar-link" data-section="reports" href="#reports">Reports</a>
+          <a class="sidebar-link" data-section="settings" href="#settings">Settings</a>
+          <a class="sidebar-link logout-link" href="../index.html">Logout</a>
         </nav>
       </aside>
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
       <main class="dashboard-content">
         <div class="topbar">
           <div>
-            <span class="eyebrow">Admin dashboard</span>
-            <h1>Platform overview</h1>
+            <span class="eyebrow" id="pageEyebrow">Admin dashboard</span>
+            <h1 id="pageTitle">Platform overview</h1>
+          </div>
+          <div class="topbar-actions">
+            <button class="btn btn-secondary btn-small sidebar-toggle" id="sidebarToggle" type="button" aria-label="Toggle menu">☰ Menu</button>
           </div>
         </div>
 
-        <section class="stats-grid">
-          <div class="stat-card"><h3 class="card-title">420</h3><p>Total Users</p></div>
-          <div class="stat-card"><h3 class="card-title">180</h3><p>Total Properties</p></div>
-          <div class="stat-card"><h3 class="card-title">132</h3><p>Active Listings</p></div>
-          <div class="stat-card"><h3 class="card-title">14</h3><p>Pending Approvals</p></div>
-        </section>
-
-        <section class="panel-card">
-          <h2 class="card-title">User management</h2>
-          <div class="table-list">
-            <div class="table-row">
-              <strong>Jane Njeri</strong>
-              <span>jane@example.com</span>
-              <span>Tenant</span>
-              <span>12 Jul 2026</span>
-              <button class="btn btn-secondary">Suspend</button>
+        <section class="admin-section active" id="section-dashboard">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <h3 class="card-title" id="statTotalUsers">0</h3>
+              <p>Total Users</p>
             </div>
-            <div class="table-row">
-              <strong>Peter Kimani</strong>
-              <span>peter@example.com</span>
-              <span>Landlord</span>
-              <span>08 Jul 2026</span>
-              <button class="btn btn-secondary">View</button>
+            <div class="stat-card">
+              <h3 class="card-title" id="statTotalProperties">0</h3>
+              <p>Total Properties</p>
+            </div>
+            <div class="stat-card">
+              <h3 class="card-title" id="statActiveListings">0</h3>
+              <p>Active Listings</p>
+            </div>
+            <div class="stat-card">
+              <h3 class="card-title" id="statPendingApprovals">0</h3>
+              <p>Pending Approvals</p>
+            </div>
+            <div class="stat-card">
+              <h3 class="card-title" id="statReportedListings">0</h3>
+              <p>Reported Listings</p>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <h2 class="card-title">Recent users</h2>
+            <div class="table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Role</th>
+                    <th>Registered</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="dashboardUsersBody"></tbody>
+              </table>
             </div>
           </div>
         </section>
 
-        <section class="panel-card">
-          <h2 class="card-title">Reports</h2>
-          <div class="table-list">
-            <div class="table-row">
-              <strong>Luxury 3 Bedroom Home</strong>
-              <span>Misleading listing</span>
-              <span>Reporter: Esther</span>
-              <span>13 Jul 2026</span>
-              <button class="btn btn-secondary">Review</button>
+        <section class="admin-section" id="section-users">
+          <div class="panel-card">
+            <div class="panel-toolbar">
+              <input id="userSearch" class="table-search" type="search" placeholder="Search users by name or email..." />
+              <select id="userRoleFilter">
+                <option value="">All roles</option>
+                <option value="Tenant">Tenant</option>
+                <option value="Landlord">Landlord</option>
+              </select>
+              <select id="userStatusFilter">
+                <option value="">All statuses</option>
+                <option value="Active">Active</option>
+                <option value="Suspended">Suspended</option>
+              </select>
             </div>
+            <div class="table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Registered</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="usersTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-section" id="section-properties">
+          <div class="panel-card">
+            <div class="panel-toolbar">
+              <input id="propertySearch" class="table-search" type="search" placeholder="Search properties by title or owner..." />
+              <select id="propertyStatusFilter">
+                <option value="">All statuses</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+              <select id="propertyApprovalFilter">
+                <option value="">All approvals</option>
+                <option value="Approved">Approved</option>
+                <option value="Pending">Pending</option>
+                <option value="Rejected">Rejected</option>
+              </select>
+            </div>
+            <div class="table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Property</th>
+                    <th>Owner</th>
+                    <th>Location</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Approval</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="propertiesTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-section" id="section-approvals">
+          <div class="panel-card">
+            <div class="panel-toolbar">
+              <input id="approvalSearch" class="table-search" type="search" placeholder="Search pending listings..." />
+            </div>
+            <div class="table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Property</th>
+                    <th>Owner</th>
+                    <th>Location</th>
+                    <th>Price</th>
+                    <th>Submitted</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="approvalsTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-section" id="section-reports">
+          <div class="panel-card">
+            <div class="panel-toolbar">
+              <input id="reportSearch" class="table-search" type="search" placeholder="Search reports..." />
+              <select id="reportReasonFilter">
+                <option value="">All reasons</option>
+              </select>
+            </div>
+            <div class="table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Property</th>
+                    <th>Reason</th>
+                    <th>Reporter</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="reportsTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-section" id="section-settings">
+          <div class="panel-card settings-panel">
+            <h2 class="card-title">Platform settings</h2>
+            <form id="settingsForm">
+              <div class="search-field">
+                <label for="settingPlatformName">Platform name</label>
+                <input id="settingPlatformName" type="text" value="RentKe" />
+              </div>
+              <div class="search-field">
+                <label for="settingContactEmail">Support email</label>
+                <input id="settingContactEmail" type="email" value="support@rentke.co.ke" />
+              </div>
+              <div class="search-field">
+                <label for="settingMaintenance">Maintenance mode</label>
+                <select id="settingMaintenance">
+                  <option value="off">Off</option>
+                  <option value="on">On</option>
+                </select>
+              </div>
+              <div class="settings-actions">
+                <button class="btn btn-primary" type="submit">Save settings</button>
+              </div>
+            </form>
           </div>
         </section>
       </main>
     </div>
 
-    <script src="../js/main.js"></script>
+    <div class="modal-overlay" id="confirmModal">
+      <div class="modal-card">
+        <h3 class="modal-title" id="confirmTitle">Are you sure?</h3>
+        <p class="modal-message" id="confirmMessage"></p>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" id="modalCancel" type="button">Cancel</button>
+          <button class="btn btn-primary" id="modalConfirm" type="button">Confirm</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="viewModal">
+      <div class="modal-card">
+        <div class="modal-head">
+          <h3 class="modal-title">User details</h3>
+          <button class="modal-close" id="viewClose" type="button" aria-label="Close">×</button>
+        </div>
+        <dl class="detail-list" id="viewDetails"></dl>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" id="viewCancel" type="button">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="../js/admin-dashboard.js"></script>
   </body>
 </html>

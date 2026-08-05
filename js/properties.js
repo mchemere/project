@@ -73,6 +73,94 @@ const properties = [
   },
 ];
 
+const RENTKE_API = '';
+
+async function apiFetch(path, options = {}) {
+  const response = await fetch(`${RENTKE_API}${path}`, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options.headers || {}),
+    },
+  });
+
+  if (!response.ok) {
+    const body = await response.json().catch(() => ({}));
+    throw new Error(body.error || `Request failed (${response.status})`);
+  }
+
+  return response.json();
+}
+
+async function getProperties() {
+  try {
+    const data = await apiFetch('/api/properties');
+    return Array.isArray(data) && data.length ? data : properties;
+  } catch (error) {
+    console.warn('RentKe API unavailable, using sample data.', error.message);
+    return properties;
+  }
+}
+
+async function getPropertyById(id) {
+  try {
+    return await apiFetch(`/api/properties/${id}`);
+  } catch (error) {
+    console.warn('RentKe API unavailable, using sample data.', error.message);
+    return properties.find((item) => item.id === Number(id)) || properties[0];
+  }
+}
+
+async function createProperty(payload) {
+  const token = localStorage.getItem('rentkeToken');
+  try {
+    const data = await apiFetch('/api/properties', {
+      method: 'POST',
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      body: JSON.stringify(payload),
+    });
+    return { ok: true, data };
+  } catch (error) {
+    if (error instanceof TypeError) {
+      return { ok: true, data: payload, offline: true };
+    }
+    return { ok: false, message: error.message };
+  }
+}
+
+async function updateProperty(id, payload) {
+  const token = localStorage.getItem('rentkeToken');
+  try {
+    const data = await apiFetch(`/api/properties/${id}`, {
+      method: 'PUT',
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      body: JSON.stringify(payload),
+    });
+    return { ok: true, data };
+  } catch (error) {
+    if (error instanceof TypeError) {
+      return { ok: true, data: payload, offline: true };
+    }
+    return { ok: false, message: error.message };
+  }
+}
+
+async function deleteProperty(id) {
+  const token = localStorage.getItem('rentkeToken');
+  try {
+    const data = await apiFetch(`/api/properties/${id}`, {
+      method: 'DELETE',
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    });
+    return { ok: true, data };
+  } catch (error) {
+    if (error instanceof TypeError) {
+      return { ok: true, offline: true };
+    }
+    return { ok: false, message: error.message };
+  }
+}
+
 function formatCurrency(amount) {
   return new Intl.NumberFormat('en-KE', {
     style: 'currency',
@@ -184,13 +272,29 @@ async function initializePropertySearch() {
   const container = document.getElementById('propertyGrid');
   const form = document.getElementById('propertySearchForm');
 
-  if (!container || !form) {
-    renderProperties(properties);
-    return;
-  }
+  if (!container) return;
 
   const data = await getProperties();
   renderProperties(data);
+
+  const urlParams = new URLSearchParams(window.location.search);
+  if ([...urlParams.keys()].length > 0) {
+    const urlFilters = {
+      search: urlParams.get('search') || '',
+      county: urlParams.get('county') || '',
+      town: urlParams.get('town') || '',
+      neighborhood: urlParams.get('neighborhood') || '',
+      type: urlParams.get('type') || '',
+      minPrice: urlParams.get('minPrice') || '',
+      maxPrice: urlParams.get('maxPrice') || '',
+      bedrooms: urlParams.get('bedrooms') || '',
+      bathrooms: urlParams.get('bathrooms') || '',
+      sortBy: urlParams.get('sort') || 'featured',
+    };
+    renderProperties(sortProperties(filterProperties(data, urlFilters), urlFilters.sortBy));
+  }
+
+  if (!form) return;
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();

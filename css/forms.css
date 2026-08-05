@@ -34,6 +34,24 @@
   resize: vertical;
 }
 
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  padding-right: 2.5rem;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 10px;
+  top: 2.6rem;
+  background: none;
+  font-size: 1.05rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
 .btn {
   min-height: 48px;
   border: 0;
@@ -64,6 +82,6 @@
 }
 
 .btn-danger {
-  background: #fbe8e8;
-  color: #a00000;
+  background: #fee2e2;
+  color: #b91c1c;
 }

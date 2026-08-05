@@ -31,6 +31,10 @@
     box-shadow: var(--shadow);
   }
 
+  .nav-links a {
+    color: var(--text);
+  }
+
   .nav-links.open {
     display: flex;
   }

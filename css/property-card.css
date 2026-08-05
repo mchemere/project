@@ -64,7 +64,7 @@
 }
 
 .favorite-btn.active {
-  background: #fff0f2;
-  color: #d92f5f;
-  border-color: #f3b5c7;
+  background: #ececec;
+  color: #1f2937;
+  border-color: #cccccc;
 }

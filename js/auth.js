@@ -85,6 +85,11 @@ async function registerUser(event) {
     return;
   }
 
+  if (!/^[0-9]{10}$/.test(phone)) {
+    showFormMessage(message, 'Phone number must be exactly 10 digits.', 'error-message');
+    return;
+  }
+
   if (password.length < 8) {
     showFormMessage(message, 'Password must be at least 8 characters long.', 'error-message');
     return;

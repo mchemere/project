@@ -1,33 +1,18 @@
-const passwordInput =
-document.getElementById("password");
+function setupPasswordToggle(button, input) {
+  if (!button || !input) return;
 
-
-const toggle =
-document.getElementById("togglePassword");
-
-
-if(toggle){
-
-toggle.addEventListener("click",()=>{
-
-
-if(passwordInput.type==="password"){
-
-passwordInput.type="text";
-
-toggle.textContent="🙈";
-
+  button.addEventListener('click', () => {
+    const isPassword = input.type === 'password';
+    input.type = isPassword ? 'text' : 'password';
+    button.textContent = isPassword ? '🙈' : '👁';
+  });
 }
 
-else{
-
-passwordInput.type="password";
-
-toggle.textContent="👁";
-
-}
-
-
+document.querySelectorAll('[data-toggle-password]').forEach((button) => {
+  const input = document.querySelector(button.dataset.togglePassword);
+  setupPasswordToggle(button, input);
 });
 
-}
+const loginToggle = document.getElementById('togglePassword');
+const loginInput = document.getElementById('loginPassword') || document.getElementById('password');
+setupPasswordToggle(loginToggle, loginInput);

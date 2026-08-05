@@ -1,0 +1,6 @@
+{
+    "chat.agentsControl.enabled": true,
+    "chat.unifiedAgentsBar.enabled": true,
+    "chat.useNestedAgentsMdFiles": false,
+    "chat.agentSessionProjection.enabled": false
+}

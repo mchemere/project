@@ -18,6 +18,7 @@
         <div class="nav-links">
           <a href="../index.html">Home</a>
           <a href="./properties.html">Find a House</a>
+          <a href="./about.html">About</a>
           <a href="./login.html">Login</a>
         </div>
       </nav>
@@ -26,6 +27,15 @@
     <main class="section">
       <div class="container details-layout">
 
+
+        <section class="gallery-card">
+          <div class="gallery-main">
+            <button class="gallery-control" id="galleryPrev" aria-label="Previous image">‹</button>
+            <img id="galleryMain" src="../frontend/css/assets/images/house.jpg" alt="Property photo" />
+            <button class="gallery-control right" id="galleryNext" aria-label="Next image">›</button>
+          </div>
+          <div class="gallery-thumbnails" id="galleryThumbs"></div>
+        </section>
 
         <section class="details-card">
           <span class="eyebrow">Featured listing</span>
@@ -55,11 +65,13 @@
         <section class="landlord-card">
           <h2>Landlord Information</h2>
           <div class="landlord-profile">
+            <div class="landlord-avatar" id="landlordAvatar">M</div>
             <div>
-              <strong>Mary Wanjiku</strong>
-              <p>Verified Landlord • Nairobi</p>
+              <strong id="landlordName">Mary Wanjiku</strong>
+              <p id="landlordMeta">Verified Landlord • Nairobi</p>
             </div>
           </div>
+          <button class="btn btn-secondary" id="contactBtn2" style="margin-top: 1rem;">Contact Landlord</button>
         </section>
 
         <section class="similar-card">
@@ -70,6 +82,56 @@
         </section>
       </div>
     </main>
+
+    <div class="modal-backdrop" id="contactModal" hidden>
+      <div class="modal">
+        <button class="modal-close" data-close-modal aria-label="Close">×</button>
+        <h2>Contact the Landlord</h2>
+        <p>Send a viewing request directly to the property owner.</p>
+        <form id="inquiryForm" class="search-form">
+          <div class="search-field">
+            <label for="inquiryName">Your name</label>
+            <input id="inquiryName" type="text" required />
+          </div>
+          <div class="search-field">
+            <label for="inquiryEmail">Email address</label>
+            <input id="inquiryEmail" type="email" required />
+          </div>
+          <div class="search-field">
+            <label for="inquiryPhone">Phone (optional)</label>
+            <input id="inquiryPhone" type="tel" />
+          </div>
+          <div class="search-field" style="grid-column: 1 / -1;">
+            <label for="inquiryText">Message</label>
+            <textarea id="inquiryText" rows="4">Hi, I would like to arrange a viewing for this property.</textarea>
+          </div>
+          <button class="btn btn-primary" type="submit" style="grid-column: 1 / -1;">Send Inquiry</button>
+          <p id="inquiryMessage" class="form-message" style="grid-column: 1 / -1;"></p>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="reportModal" hidden>
+      <div class="modal">
+        <button class="modal-close" data-close-modal aria-label="Close">×</button>
+        <h2>Report this property</h2>
+        <p>Help us keep RentKe safe by telling us what went wrong.</p>
+        <form id="reportForm" class="search-form">
+          <div class="search-field" style="grid-column: 1 / -1;">
+            <label for="reportReason">Reason</label>
+            <select id="reportReason">
+              <option>Misleading listing</option>
+              <option>Incorrect pricing</option>
+              <option>Fake photos</option>
+              <option>Scam or fraud</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <button class="btn btn-danger" type="submit" style="grid-column: 1 / -1;">Submit Report</button>
+          <p id="reportMessage" class="form-message" style="grid-column: 1 / -1;"></p>
+        </form>
+      </div>
+    </div>
 
     <script src="../js/properties.js"></script>
     <script src="../js/property-details.js"></script>

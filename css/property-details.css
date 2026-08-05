@@ -9,7 +9,7 @@
 .amenities-card,
 .landlord-card,
 .similar-card {
-  background: linear-gradient(180deg, #ffffff 0%, #fff8fb 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #eef2fa 100%);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -84,6 +84,11 @@
   margin-top: 0.5rem;
 }
 
+.detail-status--rented {
+  background: rgba(185, 28, 28, 0.12);
+  color: #b91c1c;
+}
+
 .detail-note {
   color: var(--muted);
   font-size: 0.95rem;
@@ -112,4 +117,82 @@
   height: 68px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.landlord-avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #ffffff;
+  background: linear-gradient(180deg, #22409c 0%, #152c66 100%);
+}
+
+.gallery-thumbnails img {
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.gallery-thumbnails img.active {
+  border-color: var(--primary);
+}
+
+.detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(15, 23, 42, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-backdrop[hidden] {
+  display: none;
+}
+
+.modal {
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  position: relative;
+}
+
+.modal h2 {
+  margin-top: 0;
+}
+
+.modal .search-form {
+  grid-template-columns: 1fr 1fr;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.9rem;
+  border: none;
+  background: var(--accent);
+  border-radius: 999px;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
 }

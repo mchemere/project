@@ -1,7 +1,7 @@
 .properties-filters {
   margin-bottom: 1.5rem;
   padding: 1.2rem;
-  background: linear-gradient(135deg, #fff8fb, #fffdfd);
+  background: linear-gradient(135deg, #ffffff, #eef2fa);
 }
 
 .filter-grid {
@@ -23,7 +23,7 @@
 
 .status-message {
   font-weight: 700;
-  color: var(--primary-dark);
+  color: #9db9f2;
 }
 
 .empty-state {

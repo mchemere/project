@@ -3,8 +3,8 @@
   top: 0;
   z-index: 100;
   backdrop-filter: blur(14px);
-  background: rgba(255, 248, 251, 0.92);
-  border-bottom: 1px solid rgba(243, 214, 232, 0.9);
+  background: rgba(21, 44, 102, 0.92);
+  border-bottom: 1px solid rgba(185, 198, 226, 0.35);
 }
 
 .navbar {
@@ -18,7 +18,7 @@
 .logo {
   font-size: 1.5rem;
   font-weight: 800;
-  color: var(--primary-dark);
+  color: #ffffff;
 }
 
 .nav-links {
@@ -29,7 +29,7 @@
 
 .nav-links a {
   font-weight: 600;
-  color: var(--text);
+  color: #dce4f5;
 }
 
 .menu-toggle {
@@ -38,4 +38,5 @@
   background: transparent;
   font-size: 1.5rem;
   cursor: pointer;
+  color: #ffffff;
 }

@@ -18,6 +18,7 @@
         <div class="nav-links">
           <a href="../index.html">Home</a>
           <a href="./properties.html">Find a House</a>
+          <a href="./about.html">About</a>
           <a href="./landlord-dashboard.html">Dashboard</a>
         </div>
       </nav>
@@ -79,14 +80,33 @@
             </div>
 
             <div class="search-field" style="grid-column: 1 / -1;">
+              <label>Amenities</label>
+              <div class="amenity-grid">
+                <label><input type="checkbox" name="amenities" value="Parking" /> Parking</label>
+                <label><input type="checkbox" name="amenities" value="Water" /> Water</label>
+                <label><input type="checkbox" name="amenities" value="Electricity" /> Electricity</label>
+                <label><input type="checkbox" name="amenities" value="Security" /> Security</label>
+                <label><input type="checkbox" name="amenities" value="Wi-Fi" /> Wi-Fi</label>
+                <label><input type="checkbox" name="amenities" value="Balcony" /> Balcony</label>
+                <label><input type="checkbox" name="amenities" value="Garden" /> Garden</label>
+              </div>
+            </div>
+
+            <div class="search-field" style="grid-column: 1 / -1;">
+              <label for="propertyImages">Images</label>
+              <input id="propertyImages" type="file" accept="image/*" multiple />
+              <div id="imagePreview" class="image-preview"></div>
+            </div>
+
+            <div class="search-field" style="grid-column: 1 / -1;">
               <label for="propertyAvailability">Availability</label>
               <select id="propertyAvailability">
                 <option>Available</option>
                 <option>Rented</option>
               </select>
             </div>
-            <button class="btn btn-primary" type="submit" style="grid-column: 1 / -1;">Publish Listing</button>
-            <p id="propertyFormMessage" class="form-message"></p>
+            <button class="btn btn-primary" type="submit" id="propertyFormSubmit" style="grid-column: 1 / -1;">Publish Listing</button>
+            <p id="propertyFormMessage" class="form-message" style="grid-column: 1 / -1;"></p>
           </form>
         </section>
 
