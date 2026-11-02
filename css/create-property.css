@@ -16,8 +16,6 @@
   object-fit: cover;
   border-radius: 10px;
 }
-<<<<<<< HEAD
-=======
 
 .amenity-grid {
   display: grid;
@@ -51,4 +49,3 @@
   border-radius: 10px;
   border: 1px solid var(--border);
 }
->>>>>>> b2542c5 (Save local progress)

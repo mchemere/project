@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const users = [
+  let users = [
     { id: 1, name: 'Jane Njeri', email: 'jane@example.com', role: 'Tenant', registered: '2026-07-12', status: 'Active' },
     { id: 2, name: 'Peter Kimani', email: 'peter@example.com', role: 'Landlord', registered: '2026-07-08', status: 'Active' },
     { id: 3, name: 'Amina Hassan', email: 'amina@example.com', role: 'Tenant', registered: '2026-06-30', status: 'Suspended' },
@@ -10,7 +10,7 @@
     { id: 6, name: 'David Mwangi', email: 'david@example.com', role: 'Landlord', registered: '2026-05-28', status: 'Suspended' },
   ];
 
-  const properties = [
+  let properties = [
     { id: 1, title: 'Modern 2 Bedroom Apartment', owner: 'Peter Kimani', location: 'Kisumu, Mamboleo', price: 25000, status: 'Active', approval: 'Approved', submitted: '2026-07-02' },
     { id: 2, title: 'Cozy Family House', owner: 'Brian Otieno', location: 'Nairobi, Kileleshwa', price: 42000, status: 'Active', approval: 'Approved', submitted: '2026-06-28' },
     { id: 3, title: 'Beachside Studio', owner: 'David Mwangi', location: 'Mombasa, Nyali', price: 18000, status: 'Inactive', approval: 'Approved', submitted: '2026-06-20' },
@@ -20,7 +20,7 @@
     { id: 7, title: 'Garden Villa', owner: 'Faith Wanjiru', location: 'Kisumu, Milimani', price: 50000, status: 'Active', approval: 'Pending', submitted: '2026-07-12' },
   ];
 
-  const reports = [
+  let reports = [
     { id: 1, property: 'Luxury 3 Bedroom Home', reason: 'Misleading listing', reporter: 'Esther', date: '2026-07-13' },
     { id: 2, property: 'City Center Loft', reason: 'Incorrect pricing', reporter: 'Kevin', date: '2026-07-11' },
     { id: 3, property: 'Modern 2 Bedroom Apartment', reason: 'Fake photos', reporter: 'Lucy', date: '2026-07-09' },
@@ -106,6 +106,85 @@
     toastEl.classList.add('show');
     clearTimeout(showToast._timer);
     showToast._timer = setTimeout(() => toastEl.classList.remove('show'), 2600);
+  }
+
+  async function fetchJson(path) {
+    const response = await fetch(path, { headers: { 'Content-Type': 'application/json' } });
+    if (!response.ok) throw new Error(`Request failed (${response.status})`);
+    return response.json();
+  }
+
+  async function loadAdminData() {
+    try {
+      const stats = await fetchJson('/api/admin/stats');
+      if (elements.stats.totalUsers) elements.stats.totalUsers.textContent = stats.totalUsers ?? 0;
+      if (elements.stats.totalProperties) elements.stats.totalProperties.textContent = stats.totalProperties ?? 0;
+      if (elements.stats.activeListings) elements.stats.activeListings.textContent = stats.activeListings ?? 0;
+      if (elements.stats.pendingApprovals) elements.stats.pendingApprovals.textContent = stats.pendingApprovals ?? 0;
+      if (elements.stats.reportedListings) elements.stats.reportedListings.textContent = stats.reportedListings ?? 0;
+    } catch (error) {
+      console.warn('RentKe admin stats unavailable, using sample data.', error.message);
+    }
+
+    try {
+      const serverUsers = await fetchJson('/api/users');
+      if (Array.isArray(serverUsers) && serverUsers.length) {
+        users.length = 0;
+        serverUsers.forEach((u) => {
+          users.push({
+            id: u.id,
+            name: u.name,
+            email: u.email,
+            role: u.role ? u.role.charAt(0).toUpperCase() + u.role.slice(1) : u.role,
+            registered: u.registered || '',
+            status: u.status || 'Active',
+          });
+        });
+      }
+    } catch (error) {
+      console.warn('RentKe admin users unavailable, using sample data.', error.message);
+    }
+
+    try {
+      const serverProperties = await fetchJson('/api/properties');
+      if (Array.isArray(serverProperties) && serverProperties.length) {
+        properties.length = 0;
+        serverProperties.forEach((p) => {
+          const status = p.status === 'rented' ? 'Inactive' : p.status === 'available' ? 'Active' : p.status;
+          const approval = p.approval ? p.approval.charAt(0).toUpperCase() + p.approval.slice(1) : 'Pending';
+          properties.push({
+            id: p.id,
+            title: p.title,
+            owner: p.owner || p.landlord?.name || 'Unknown',
+            location: p.location || `${p.town || ''}, ${p.county || ''}`,
+            price: p.price,
+            status,
+            approval,
+            submitted: (p.createdAt || '').slice(0, 10),
+          });
+        });
+      }
+    } catch (error) {
+      console.warn('RentKe admin properties unavailable, using sample data.', error.message);
+    }
+
+    try {
+      const serverReports = await fetchJson('/api/reports');
+      if (Array.isArray(serverReports) && serverReports.length) {
+        reports.length = 0;
+        serverReports.forEach((r) => {
+          reports.push({
+            id: r.id,
+            property: r.property,
+            reason: r.reason,
+            reporter: r.reporter,
+            date: (r.createdAt || '').slice(0, 10),
+          });
+        });
+      }
+    } catch (error) {
+      console.warn('RentKe admin reports unavailable, using sample data.', error.message);
+    }
   }
 
   /* ------------------------------ Stats ------------------------------ */
@@ -367,7 +446,7 @@
 
   /* --------------------------- Action handling ------------------------ */
   function handleUserAction(action, id) {
-    const user = users.find((u) => u.id === id);
+    const user = users.find((u) => String(u.id) === String(id));
     if (!user) return;
 
     if (action === 'view') {
@@ -400,7 +479,7 @@
   }
 
   function handlePropertyAction(action, id) {
-    const property = properties.find((p) => p.id === id);
+    const property = properties.find((p) => String(p.id) === String(id));
     if (!property) return;
 
     if (action === 'approve') {
@@ -432,7 +511,7 @@
   }
 
   function handleReportAction(action, id) {
-    const report = reports.find((r) => r.id === id);
+    const report = reports.find((r) => String(r.id) === String(id));
     if (!report) return;
 
     if (action === 'dismiss') {
@@ -592,12 +671,13 @@
     elements.reportReasonFilter.addEventListener('change', renderReports);
   }
 
-  function init() {
+  async function init() {
     bindTableActions();
     bindNavigation();
     bindSettings();
     bindFilters();
     populateReportReasons();
+    await loadAdminData();
     renderAll();
   }
 

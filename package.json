@@ -6,9 +6,16 @@
   "scripts": {
     "start": "node backend/server.js",
     "dev": "nodemon backend/server.js",
-    "test": "node --test"
+    "test": "node --test",
+    "cap:add:android": "npx cap add android",
+    "cap:sync": "npx cap sync",
+    "cap:open": "npx cap open android",
+    "cap:build": "npx cap build android"
   },
   "dependencies": {
+    "@capacitor/core": "^8.5.3",
+    "@capacitor/cli": "^8.5.3",
+    "@capacitor/android": "^8.5.3",
     "cors": "^2.8.5",
     "express": "^4.19.2"
   },

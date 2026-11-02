@@ -8,6 +8,12 @@
       name="description"
       content="Find houses, apartments and rentals across Kenya with RentKe."
     />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1E3A8A" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="RentKe" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -22,7 +28,7 @@
     <link rel="stylesheet" href="./css/responsive.css" />
   </head>
   <body>
-    <header class="site-header">
+    <header class="site-header floating-nav">
       <nav class="navbar container">
         <a class="logo" href="#">RentKe</a>
         <button class="menu-toggle" aria-label="Open navigation">☰</button>
@@ -38,22 +44,92 @@
     </header>
 
     <main>
-      <section class="hero">
+      <section class="hero landing-hero" id="home">
+        <div class="hero-background" aria-hidden="true">
+          <div class="slideshow" id="houseSlideshow">
+            <div class="slideshow-viewport" role="group" aria-roledescription="carousel" aria-label="Featured rental properties">
+              <div class="slideshow-track">
+                <figure class="slide active" role="group" aria-roledescription="slide" aria-label="Slide 1 of 5">
+                  <img src="./assets/images/hero-modern-apartment.jpg" alt="Modern two bedroom apartment exterior in Kisumu, Kenya" loading="eager" />
+                  <div class="slide-badges">
+                    <span class="slide-badge badge-type">Apartment &middot; 2 Bedrooms</span>
+                    <span class="slide-badge badge-price">KES 25,000 / mo</span>
+                  </div>
+                  <figcaption class="slide-info">
+                    <h3 class="slide-title">Modern 2 Bedroom Apartment</h3>
+                    <p class="slide-sub">Kisumu, Kenya &middot; Sample</p>
+                  </figcaption>
+                </figure>
+
+                <figure class="slide" role="group" aria-roledescription="slide" aria-label="Slide 2 of 5">
+                  <img src="./assets/images/hero-family-house.jpg" alt="Cozy family house with outdoor space in Nairobi, Kenya" loading="lazy" />
+                  <div class="slide-badges">
+                    <span class="slide-badge badge-type">House &middot; 3 Bedrooms</span>
+                    <span class="slide-badge badge-price">KES 42,000 / mo</span>
+                  </div>
+                  <figcaption class="slide-info">
+                    <h3 class="slide-title">Cozy Family House</h3>
+                    <p class="slide-sub">Nairobi, Kenya &middot; Sample</p>
+                  </figcaption>
+                </figure>
+
+                <figure class="slide" role="group" aria-roledescription="slide" aria-label="Slide 3 of 5">
+                  <img src="./assets/images/hero-luxury-home.jpg" alt="Luxury three bedroom home in Eldoret, Kenya" loading="lazy" />
+                  <div class="slide-badges">
+                    <span class="slide-badge badge-type">House &middot; 3 Bedrooms</span>
+                    <span class="slide-badge badge-price">KES 36,000 / mo</span>
+                  </div>
+                  <figcaption class="slide-info">
+                    <h3 class="slide-title">Luxury 3 Bedroom Home</h3>
+                    <p class="slide-sub">Eldoret, Kenya &middot; Sample</p>
+                  </figcaption>
+                </figure>
+
+                <figure class="slide" role="group" aria-roledescription="slide" aria-label="Slide 4 of 5">
+                  <img src="./assets/images/hero-city-loft.jpg" alt="City center loft apartment in Nairobi, Kenya" loading="lazy" />
+                  <div class="slide-badges">
+                    <span class="slide-badge badge-type">Apartment &middot; 2 Bedrooms</span>
+                    <span class="slide-badge badge-price">KES 30,000 / mo</span>
+                  </div>
+                  <figcaption class="slide-info">
+                    <h3 class="slide-title">City Center Loft</h3>
+                    <p class="slide-sub">Nairobi, Kenya &middot; Sample</p>
+                  </figcaption>
+                </figure>
+
+                <figure class="slide" role="group" aria-roledescription="slide" aria-label="Slide 5 of 5">
+                  <img src="./assets/images/hero-affordable-unit.jpg" alt="Affordable one bedroom apartment in Nakuru, Kenya" loading="lazy" />
+                  <div class="slide-badges">
+                    <span class="slide-badge badge-type">Apartment &middot; 1 Bedroom</span>
+                    <span class="slide-badge badge-price">KES 15,500 / mo</span>
+                  </div>
+                  <figcaption class="slide-info">
+                    <h3 class="slide-title">Affordable 1 Bedroom Unit</h3>
+                    <p class="slide-sub">Nakuru, Kenya &middot; Sample</p>
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+            <button class="slideshow-btn prev" id="slideshowPrev" type="button" aria-label="Previous property image">&#10094;</button>
+            <button class="slideshow-btn next" id="slideshowNext" type="button" aria-label="Next property image">&#10095;</button>
+            <div class="slideshow-dots" id="slideshowDots" role="group" aria-label="Choose property image"></div>
+          </div>
+          <div class="hero-overlay" aria-hidden="true"></div>
+        </div>
+
         <div class="container hero-content">
           <div class="hero-copy">
             <span class="eyebrow">Kenyan Property Marketplace</span>
-            <h1>Find a place you can call home.</h1>
+            <h1>Find a Place to Call Home.</h1>
             <p>
-              Browse stylish apartments, family-friendly houses, and cozy
-              rentals across Nairobi, Kisumu, Mombasa, Nakuru, and beyond.
-              RentKe makes it simple to compare homes, connect with landlords,
-              and discover spaces that truly feel like home.
+              Discover rental homes across Kenya. Find a place that matches
+              your lifestyle and budget.
             </p>
 
             <form class="search-form" id="homeSearchForm">
               <div class="search-field">
                 <label for="location">Location</label>
-                <input id="location" name="location" type="text" placeholder="Nairobi" />
+                <input id="location" name="location" type="text" placeholder="Nairobi, Kenya" />
               </div>
               <div class="search-field">
                 <label for="propertyType">Property type</label>
@@ -65,31 +141,23 @@
                 </select>
               </div>
               <div class="search-field">
-                <label for="price">Max price</label>
-                <input id="price" name="price" type="number" placeholder="30000" />
+                <label for="minPrice">Min budget</label>
+                <input id="minPrice" name="minPrice" type="number" placeholder="Min" />
+              </div>
+              <div class="search-field">
+                <label for="price">Max budget</label>
+                <input id="price" name="price" type="number" placeholder="Max" />
               </div>
               <button class="btn btn-primary" type="submit">Search</button>
             </form>
           </div>
-
-          <div class="hero-card card-accent">
-            <div class="mini-stat">
-              <strong>1,200+</strong>
-              <span>beautifully curated homes waiting to be discovered</span>
-            </div>
-            <div class="mini-stat">
-              <strong>4.9/5</strong>
-              <span>tenant satisfaction across every step of the journey</span>
-            </div>
-            <div class="mini-stat">
-              <strong>7 counties</strong>
-              <span>from Nairobi and Mombasa to Kisumu, Nakuru, and more</span>
-            </div>
-          </div>
         </div>
+
+        <div class="hero-blob blob-1" aria-hidden="true"></div>
+        <div class="hero-blob blob-2" aria-hidden="true"></div>
       </section>
 
-      <section class="featured section" id="properties">
+      <section class="featured section reveal" id="properties">
         <div class="container">
           <div class="section-heading">
             <div>
@@ -102,7 +170,7 @@
         </div>
       </section>
 
-      <section class="locations section">
+      <section class="locations section reveal">
         <div class="container">
           <div class="section-heading centered">
             <span class="eyebrow">Popular places</span>
@@ -123,7 +191,7 @@
         </div>
       </section>
 
-      <section class="section">
+      <section class="section reveal">
         <div class="container">
           <div class="section-heading centered">
             <span class="eyebrow">Why RentKe</span>
@@ -168,7 +236,7 @@
         </div>
       </section>
 
-      <section class="how-it-works section">
+      <section class="how-it-works section reveal">
         <section class="founder section">
   <div class="container founder-content">
 
@@ -262,6 +330,8 @@
         </div>
       </div>
     </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">&#8593;</button>
 
     <script src="./js/properties.js"></script>
     <script src="./js/main.js"></script>

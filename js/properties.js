@@ -76,6 +76,10 @@ const properties = [
 const RENTKE_API = '';
 
 async function apiFetch(path, options = {}) {
+  if (typeof navigator !== 'undefined' && !navigator.onLine) {
+    throw new Error('You appear to be offline. Please check your connection and try again.');
+  }
+
   const response = await fetch(`${RENTKE_API}${path}`, {
     ...options,
     headers: {
@@ -99,6 +103,26 @@ async function getProperties() {
   } catch (error) {
     console.warn('RentKe API unavailable, using sample data.', error.message);
     return properties;
+  }
+}
+
+async function getInquiries() {
+  try {
+    const data = await apiFetch('/api/inquiries');
+    return Array.isArray(data) ? data : [];
+  } catch (error) {
+    console.warn('RentKe API unavailable, no inquiries to show.', error.message);
+    return [];
+  }
+}
+
+async function getReports() {
+  try {
+    const data = await apiFetch('/api/reports');
+    return Array.isArray(data) ? data : [];
+  } catch (error) {
+    console.warn('RentKe API unavailable, no reports to show.', error.message);
+    return [];
   }
 }
 
@@ -230,12 +254,6 @@ function renderProperties(list, emptyMessage = 'No properties match your filters
 
   if (resultsCount) resultsCount.textContent = `${list.length} properties found`;
   if (statusMessage) statusMessage.textContent = 'Showing matching listings.';
-}
-
-async function getProperties() {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(properties), 300);
-  });
 }
 
 function filterProperties(list, filters = {}) {

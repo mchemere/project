@@ -31,6 +31,27 @@ function getToken() {
   return localStorage.getItem('rentkeToken') || '';
 }
 
+function saveViewedProperty(id) {
+  if (!id) return;
+  try {
+    localStorage.setItem(`rentke-viewed-${id}`, new Date().toISOString());
+  } catch {
+    // Local storage unavailable; ignore view tracking.
+  }
+}
+
+function saveInquiry(inquiry) {
+  try {
+    const raw = localStorage.getItem('rentke-inquiries');
+    const list = raw ? JSON.parse(raw) : [];
+    const inquiries = Array.isArray(list) ? list : [];
+    inquiries.unshift({ ...inquiry, createdAt: new Date().toISOString() });
+    localStorage.setItem('rentke-inquiries', JSON.stringify(inquiries.slice(0, 20)));
+  } catch {
+    // Local storage unavailable; ignore inquiry tracking.
+  }
+}
+
 function showModal(id) {
   const modal = document.getElementById(id);
   if (modal) modal.hidden = false;
@@ -192,6 +213,14 @@ async function sendInquiry(event) {
       body: JSON.stringify(payload),
     });
     showFormMessage(message, data.message || 'Your inquiry has been sent to the landlord.', 'success-message');
+    saveInquiry({
+      propertyId: currentProperty?.id,
+      propertyTitle: currentProperty?.title,
+      name: payload.name,
+      email: payload.email,
+      phone: payload.phone,
+      message: payload.message,
+    });
     form.reset();
   } catch (error) {
     if (error instanceof TypeError) {
@@ -230,6 +259,7 @@ async function sendReport(event) {
 
 async function initializePropertyDetails() {
   const property = await getPropertyById(propertyId);
+  saveViewedProperty(property?.id);
   renderProperty(property);
   renderSimilar();
 

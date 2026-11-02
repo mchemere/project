@@ -71,7 +71,10 @@ app.post('/api/register', async (req, res) => {
   users.push(user);
   saveUsers(users);
 
-  res.status(201).json({ message: 'Account created successfully. Please login.' });
+  res.status(201).json({
+    message: 'Account created successfully. Please login.',
+    user: { id: user.id, name: user.name, email: user.email, phone: user.phone, role: user.role },
+  });
 });
 
 app.post('/api/login', async (req, res) => {
@@ -100,6 +103,12 @@ app.post('/api/login', async (req, res) => {
   });
 });
 
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
 app.listen(PORT, () => {
   console.log(`RentKe server running at http://localhost:${PORT}`);
 });
+
+module.exports = { app };

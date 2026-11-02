@@ -40,3 +40,118 @@
   cursor: pointer;
   color: #ffffff;
 }
+
+/* ------------------------------------------------------------------ */
+/* Floating glass navigation (landing page hero)                       */
+/* ------------------------------------------------------------------ */
+
+.site-header.floating-nav {
+  position: fixed;
+  top: 1rem;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.site-header.floating-nav .navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 0;
+  width: min(1120px, 100%);
+  padding: 0.4rem 0.45rem 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(13, 25, 60, 0.55);
+  box-shadow: 0 14px 38px rgba(2, 8, 23, 0.4);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+}
+
+.site-header.floating-nav .logo {
+  color: #ffffff;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.site-header.floating-nav .nav-links {
+  gap: 0.15rem;
+}
+
+.site-header.floating-nav .nav-links a {
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.site-header.floating-nav .nav-links a:hover,
+.site-header.floating-nav .nav-links a:focus-visible {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.site-header.floating-nav .nav-links a.btn-primary {
+  background: var(--rentke-pink, #e75480);
+  color: #ffffff;
+}
+
+.site-header.floating-nav .menu-toggle {
+  color: #ffffff;
+}
+
+/* Mobile: collapse into a compact pill with an expanding dropdown */
+@media (max-width: 760px) {
+  .site-header.floating-nav {
+    top: 0.75rem;
+    padding: 0;
+  }
+
+  .site-header.floating-nav .navbar {
+    width: 100%;
+    padding: 0.35rem 0.35rem 0.35rem 0.7rem;
+    gap: 0.5rem;
+  }
+
+  .site-header.floating-nav .menu-toggle {
+    display: block;
+    color: #ffffff;
+  }
+
+  .site-header.floating-nav .nav-links {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 0;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.5rem;
+    background: rgba(13, 25, 60, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 18px;
+    box-shadow: 0 18px 40px rgba(2, 8, 23, 0.45);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .site-header.floating-nav .nav-links.open {
+    display: flex;
+  }
+
+  .site-header.floating-nav .nav-links a {
+    display: block;
+    padding: 0.7rem 1rem;
+  }
+}

@@ -53,3 +53,10 @@
     flex-direction: column;
   }
 }
+
+@media (max-width: 760px) {
+  .landing-hero {
+    padding: 6.5rem 0 5rem;
+    align-items: flex-start;
+  }
+}

@@ -41,7 +41,7 @@ test('POST /api/register creates user and persists it to disk', async () => {
       body: JSON.stringify({
         name: 'Test User',
         email: 'persisted@example.com',
-        phone: '+254700000000',
+        phone: '0700000000',
         password: 'password123',
         role: 'tenant',
       }),

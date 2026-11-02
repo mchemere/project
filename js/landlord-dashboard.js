@@ -4,6 +4,8 @@ let landlordProperties = [
   { id: 3, title: 'Townview Studio', location: 'Mombasa', price: 19000, status: 'available', date: '09 Jul 2026' },
 ];
 
+let landlordInquiries = [];
+
 function getDetailsLink(id) {
   return window.location.pathname.includes('/pages/')
     ? `./property-details.html?id=${id}`
@@ -14,6 +16,9 @@ function renderLandlordStats() {
   const total = landlordProperties.length;
   const active = landlordProperties.filter((p) => p.status !== 'rented').length;
   const rented = landlordProperties.filter((p) => p.status === 'rented').length;
+  const inquiryCount = landlordInquiries.filter((inquiry) =>
+    landlordProperties.some((p) => p.id === inquiry.propertyId),
+  ).length;
 
   const set = (id, value) => {
     const el = document.getElementById(id);
@@ -23,7 +28,7 @@ function renderLandlordStats() {
   set('statTotal', total);
   set('statActive', active);
   set('statRented', rented);
-  set('statInquiries', 4);
+  set('statInquiries', inquiryCount);
 }
 
 async function deleteLandlordProperty(id, row) {
@@ -122,7 +127,33 @@ async function loadLandlordProperties() {
       date: p.createdAt ? new Date(p.createdAt).toLocaleDateString('en-KE', { day: '2-digit', month: 'short', year: 'numeric' }) : '',
     }));
   }
+
+  const inquiries = await getInquiries();
+  landlordInquiries = Array.isArray(inquiries) ? inquiries : [];
+
   renderLandlordProperties();
+}
+
+const sidebarToggle = document.getElementById('sidebarToggle');
+const landlordSidebar = document.getElementById('landlordSidebar');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+function openLandlordSidebar() {
+  landlordSidebar?.classList.add('open');
+  sidebarOverlay?.classList.add('show');
+}
+
+function closeLandlordSidebar() {
+  landlordSidebar?.classList.remove('open');
+  sidebarOverlay?.classList.remove('show');
+}
+
+if (sidebarToggle && landlordSidebar && sidebarOverlay) {
+  sidebarToggle.addEventListener('click', () => {
+    if (landlordSidebar.classList.contains('open')) closeLandlordSidebar();
+    else openLandlordSidebar();
+  });
+  sidebarOverlay.addEventListener('click', closeLandlordSidebar);
 }
 
 loadLandlordProperties();
